@@ -30,5 +30,5 @@ sslSettings = ssl.SSLContext(mqtt.client.ssl.PROTOCOL_TLS)
 
 # put in your cluster credentials and hostname
 auth = {'username': config['MQTT_USERNAME'], 'password': config['MQTT_PASSWORD']}
-publish.multiple(msgs, hostname=config['MQTT_HOST'], port=config['MQTT_PORT'], auth=auth,
+publish.multiple(msgs, hostname=config['MQTT_HOST'], port=int(config['MQTT_PORT']), auth=auth,
                  tls=sslSettings, protocol=paho.MQTTv31)
