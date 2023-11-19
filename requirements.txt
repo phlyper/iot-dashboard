@@ -1,1 +1,19 @@
-paho-mqtt==1.5.1
+# dashboard requirements
+# Usage: pip install -r requirements.txt
+
+bottle
+faker
+# paho-mqtt==1.5.1
+paho-mqtt
+json
+python-dotenv
+
+
+
+
+
+
+
+
+
+

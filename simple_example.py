@@ -18,6 +18,8 @@ import time
 import paho.mqtt.client as paho
 from paho import mqtt
 
+from config import load_config
+config = load_config()
 
 # setting callbacks for different events to see if it works, print the message etc.
 def on_connect(client, userdata, flags, rc, properties=None):
@@ -81,9 +83,9 @@ client.on_connect = on_connect
 # enable TLS for secure connection
 client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
 # set username and password
-client.username_pw_set("<your_username>", "<your_password>")
+client.username_pw_set(config['MQTT_USERNAME'], config['MQTT_PASSWORD'])
 # connect to HiveMQ Cloud on port 8883 (default for MQTT)
-client.connect("<your_host>", 8883)
+client.connect(config['MQTT_HOST'], config['MQTT_PORT'])
 
 # setting callbacks, use separate functions like above for better visibility
 client.on_subscribe = on_subscribe
