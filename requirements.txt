@@ -7,7 +7,8 @@ faker
 paho-mqtt
 json
 python-dotenv
-
+mysql
+mysql-connector-python
 
 
 
