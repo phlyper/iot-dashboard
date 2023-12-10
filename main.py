@@ -3,7 +3,7 @@ from bottle import Bottle, route, run, template, jinja2_view
 from bottle import Jinja2Template, url, static_file
 import functools
 # from faker import Faker
-# import config.bootstrap
+import config.bootstrap
 
 import datetime
 import json
@@ -22,21 +22,31 @@ app = Bottle()
 @app.route('/')
 @view('index.html')
 def home():
-    rows = []
+    rows = {}
 
-    # # cursor object c
-    # mycursor = config.bootstrap.dbc.cursor()
+    # cursor object c
+    mycursor = config.bootstrap.dbc.cursor()
     
-    # # executing the create database statement
-    # mycursor.execute("SELECT * FROM data_object WHERE detected_at IS NOT NULL ORDER BY detected_at DESC LIMIT 0, 100")
-    # rows['latest'] = mycursor.fetchall()
+    # executing the create database statement
+    mycursor.execute("SELECT * FROM data_object WHERE detected_at IS NOT NULL ORDER BY detected_at DESC LIMIT 0, 100")
+    
+    rows['latest'] = mycursor.fetchall()
+    # rows['latest'] = []
+    # for x in mycursor.fetchall():
+    #     rows['latest'].append(x)
 
-    # # cursor object c
-    # mycursor = config.bootstrap.dbc.cursor()
+    # cursor object c
+    mycursor = config.bootstrap.dbc.cursor()
     
-    # # executing the create database statement
-    # mycursor.execute("SELECT object, count(id) as count_object FROM data_object WHERE object IS NOT NULL GROUP BY object ORDER BY detected_at DESC LIMIT 0, 100")
-    # rows['objects'] = mycursor.fetchall()
+    # executing the create database statement
+    mycursor.execute("SELECT object, count(id) as count_object, detected_at FROM data_object WHERE object IS NOT NULL GROUP BY object ORDER BY detected_at DESC")
+    
+    rows['objects'] = mycursor.fetchall()
+    # rows['objects'] = []
+    # for x in mycursor.fetchall():
+    #     rows['objects'].append(x)
+
+    print(rows)
 
     return {'title': '<b>Dashboard</b>!', 'rows': rows }
 
