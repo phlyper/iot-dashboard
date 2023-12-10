@@ -1,8 +1,15 @@
 <div class="row">
     <!-- Row #1 -->
-    <div class="col-6 col-lg-6 col-xl-4">
-        <h3></h3>
-        <div class="table-responsive">
+    <div class="col-6 col-lg-6 col-xl-3">
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Accordion Item #1
+                </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                        <div class="table-responsive">
             <table class="table table-striped table-hover"><!-- table-bordered -->
                 <thead>
                     <tr>
@@ -13,13 +20,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% if rows['objects'] is defined %}
-                    {% for row in rows['objects'] %}
+                    {% if rows['latest'] is defined %}
+                    {% for row in rows['latest'] %}
                     <tr>
-                        <td>{{ row['id'] }}</td>
-                        <td>{{ row['object'] }}</td>
-                        <td>{{ row['accuracy'] }}</td>
-                        <td>{{ row['detected_at'] }}</td>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[3] }}</td>
+                        <td>{{ row[4] }}</td>
+                        <td>{{ row[7] }}</td>
                     </tr>
                     {% endfor %}
                     {% else %}
@@ -30,14 +37,25 @@
                 </tbody>
             </table>
         </div>
+                <div class="accordion-body d-none">
+                    <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-6 col-lg-3 col-xl-4">
+    <div class="col-6 col-lg-4 col-xl-3">
         <h3></h3>
         <canvas id="myChart-01"></canvas>
     </div>
     
-    <div class="col-6 col-xl-4">
+    <div class="col-6 col-lg-4 col-xl-3">
         <h3></h3>
         <canvas id="myChart-02"></canvas>
+    </div>
+    
+    <div class="col-6 col-lg-4 col-xl-3">
+        <h3></h3>
+        <canvas id="myChart-03"></canvas>
     </div>
 </div>

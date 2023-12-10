@@ -18,6 +18,13 @@
         let labels = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
         let datas = [12, 19, 3, 5, 2, 3];
 
+{% if rows['objects'] is defined %}
+    {% for row in rows['objects'] %}
+        labels.push("{{ row[0] }}");
+        datas.push({{ row[1] }});
+    {% endfor %}
+{% endif %}
+
         // myChart-01
         let ctx_01 = document.getElementById('myChart-01');
 
@@ -43,6 +50,25 @@
         // myChart-02
         const ctx_02 = document.getElementById('myChart-02');
         new Chart(ctx_02, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'My First Dataset',
+                    data: datas,
+                    backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)'
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+        });
+
+        // myChart-03 https://www.chartjs.org/docs/latest/samples/bar/border-radius.html
+        const ctx_03 = document.getElementById('myChart-03');
+        new Chart(ctx_03, {
             type: 'doughnut',
             data: {
                 labels: labels,

@@ -39,6 +39,17 @@ def home():
     mycursor = config.bootstrap.dbc.cursor()
     
     # executing the create database statement
+    mycursor.execute("SELECT DISTINCT(`object`) FROM data_object WHERE object IS NOT NULL")
+    
+    rows['list_objects'] = mycursor.fetchall()
+    # rows['objects'] = []
+    # for x in mycursor.fetchall():
+    #     rows['objects'].append(x)
+
+    # cursor object c
+    mycursor = config.bootstrap.dbc.cursor()
+    
+    # executing the create database statement
     mycursor.execute("SELECT object, count(id) as count_object, detected_at FROM data_object WHERE object IS NOT NULL GROUP BY object ORDER BY detected_at DESC")
     
     rows['objects'] = mycursor.fetchall()
