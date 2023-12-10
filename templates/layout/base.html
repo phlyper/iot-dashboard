@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <title>Codebase - Bootstrap 5 Admin Template &amp; UI Framework</title>
+
+    <meta name="description" content="Codebase - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave">
+    <meta name="author" content="pixelcave">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph Meta -->
+    <meta property="og:title" content="Codebase - Bootstrap 5 Admin Template &amp; UI Framework">
+    <meta property="og:site_name" content="Codebase">
+    <meta property="og:description" content="Codebase - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <!-- Icons -->
+    <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
+    <link rel="shortcut icon" href="/assets/media/favicons/favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/media/favicons/favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/media/favicons/apple-touch-icon-180x180.png">
+    <!-- END Icons -->
+
+    <!-- Stylesheets -->
+
+    <!-- Codebase framework -->
+    <link rel="stylesheet" id="css-main" href="/assets/css/codebase.min.css">
+
+    <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
+    <!-- <link rel="stylesheet" id="css-theme" href="/assets/css/themes/flat.min.css"> -->
+    <link rel="stylesheet" id="css-theme" href="/assets/css/themes/corporate.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <!-- END Stylesheets -->
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
+    
+    {% block style %}
+    {% endblock style %}
+  </head>
+
+  <body>
+    <!-- Page Container -->
+    <div id="page-container" class="sidebar-dark side-scroll page-header-fixed page-header-glass page-header-dark main-content-boxed"><!-- container -->
+    {% include 'layout/sidebar.html' %}
+
+    {% include 'layout/header.html' %}
+
+      <!-- Main Container -->
+      <main id="main-container">
+        {% block main_container %}
+
+        <!-- Header -->
+        <div class="bg-primary-dark">
+          <div class="content content-top">
+            <div class="row push">
+              <div class="col-md py-2 d-md-flex align-items-md-center text-center">
+                <h1 class="text-white mb-0">
+                  <span class="fw-light">Dashboard</span>
+                  <span class="fw-normal fs-lg text-white-75 d-none d-md-inline-block">Welcome Admin</span>
+                </h1>
+              </div>
+              <div class="col-md py-2 d-md-flex align-items-md-center justify-content-md-end text-center">
+              {% block main_container_actions %}
+                <a href="#" class="btn btn-alt-primary">
+                  <i class="fa fa-user-plus opacity-50 me-1"></i> New Account
+                </a>
+              {% endblock main_container_actions %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END Header -->
+
+        <!-- Page Content -->
+        <div class="bg-body-extra-light">
+            {% include 'layout/breadcrumb.html' %}
+
+          <!-- Content -->
+          <div class="content">
+            {% block content%}
+            {% endblock content %}
+          </div>
+          <!-- END Content -->
+        </div>
+        <!-- END Page Content -->
+        {% endblock main_container%}
+      </main>
+      <!-- END Main Container -->
+
+    {% include 'layout/footer.html' %}
+    </div>
+    <!-- END Page Container -->
+
+
+    <!--
+        Codebase JS
+
+        Core libraries and functionality
+        webpack is putting everything together at assets/_js/main/app.js
+    -->
+    <script src="/assets/js/codebase.app.min.js"></script>
+
+    <!-- Page JS Plugins -->
+    <script src="/assets/js/plugins/chart.js/chart.umd.js"></script>
+
+    <!-- Page JS Code -->
+    <script src="/assets/js/pages/db_corporate.min.js"></script>  
+    {% block javascript %}
+    {% endblock javascript %}
+  </body>
+</html>
