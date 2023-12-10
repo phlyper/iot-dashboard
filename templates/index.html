@@ -1,5 +1,28 @@
 {% extends 'layout/base.html' %}
 
+{% block style %}
+{{ super() }}
+
+{% endblock style %}
+
 {% block content %}
+{{ super() }}
+
+{#% include 'section-a.html' %#}
+{% include 'section-b.html' %}
 
 {% endblock content %}
+
+{% block javascript %}  
+{{ super() }}
+<!-- umd -->
+<script src="/assets/plugins/chart.js/chart.js"></script>
+{% include 'scripts.inc.html' %}
+<script>
+(function($) {
+    $(function() {
+
+    });
+})(jQuery);
+</script>
+{% endblock javascript %}

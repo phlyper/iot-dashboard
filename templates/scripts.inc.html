@@ -1,0 +1,45 @@
+
+<script>
+(function($) {
+    $(function() {
+        // Set Global Chart.js configuration
+        Chart.defaults.color = '#818d96';
+        Chart.defaults.scale.grid.color = "rgba(0,0,0,.04)";
+        Chart.defaults.scale.grid.zeroLineColor = "rgba(0,0,0,.1)";
+        Chart.defaults.scale.beginAtZero = true;
+        Chart.defaults.elements.line.borderWidth = 2;
+        Chart.defaults.elements.point.radius = 5;
+        Chart.defaults.elements.point.hoverRadius = 7;
+        Chart.defaults.plugins.tooltip.radius = 3;
+        Chart.defaults.plugins.legend.labels.boxWidth = 12;
+
+        // DataSet
+        let labels = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
+        let data = [12, 19, 3, 5, 2, 3];
+
+        // myChart-01
+        let ctx_01 = document.getElementById('myChart-01');
+
+        new Chart(ctx_01, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '# of Votes',
+                    data: datas,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            },
+        });
+
+        // myChart-02
+        const ctx_02 = document.getElementById('myChart-02');
+        new Chart(ctx_02, {
+ 

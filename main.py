@@ -2,8 +2,8 @@ import bottle
 from bottle import Bottle, route, run, template, jinja2_view
 from bottle import Jinja2Template, url, static_file
 import functools
-from faker import Faker
-import config.bootstrap
+# from faker import Faker
+# import config.bootstrap
 
 import datetime
 import json
@@ -17,7 +17,7 @@ Jinja2Template.defaults = {
 view = functools.partial(jinja2_view, template_lookup=["templates"])
 
 app = Bottle()
-fake = Faker(['fr_FR', 'en_US'])
+# fake = Faker(['fr_FR', 'en_US'])
 
 @app.route('/')
 @view('index.html')

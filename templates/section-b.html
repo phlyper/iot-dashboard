@@ -1,0 +1,43 @@
+<div class="row">
+    <!-- Row #1 -->
+    <div class="col-6 col-lg-6 col-xl-4">
+        <h3></h3>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover"><!-- table-bordered -->
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Object</th>
+                        <th>Accuracy</th>
+                        <th>Detected at</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if rows['objects'] is defined %}
+                    {% for row in rows['objects'] %}
+                    <tr>
+                        <td>{{ row['id'] }}</td>
+                        <td>{{ row['object'] }}</td>
+                        <td>{{ row['accuracy'] }}</td>
+                        <td>{{ row['detected_at'] }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="4">No data</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3 col-xl-4">
+        <h3></h3>
+        <canvas id="myChart-01"></canvas>
+    </div>
+    
+    <div class="col-6 col-xl-4">
+        <h3></h3>
+        <canvas id="myChart-02"></canvas>
+    </div>
+</div>
