@@ -1,5 +1,12 @@
 
 <script>
+function load_data($, params) {
+    console.log('params', params);
+    $.get("/dashboard", function(data) {
+        console.log('data', data);
+    }, 'json');
+}
+
 (function($) {
     $(function() {
         if(jQuery.isFunction(Chart)) {
@@ -85,6 +92,13 @@
             },
         });
         }
+
+
+        setInterval(() => {
+            if($.isFunction(load_data)) {
+                load_data($, {});
+            }
+        }, 2400);
     });
 })(jQuery);
 </script>

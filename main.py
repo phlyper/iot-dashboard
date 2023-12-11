@@ -1,11 +1,11 @@
 import bottle
-from bottle import Bottle, route, run, template, jinja2_view
+from bottle import Bottle, route, get, post, request, run, template, jinja2_view
 from bottle import Jinja2Template, url, static_file
 import functools
 # from faker import Faker
 import config.bootstrap
 
-import datetime
+from datetime import date, datetime
 import json
 import paho.mqtt.client as paho
 
@@ -46,6 +46,8 @@ def home():
     # for x in mycursor.fetchall():
     #     rows['objects'].append(x)
 
+    mycursor.close()
+
     # cursor object c
     mycursor = config.bootstrap.dbc.cursor()
     
@@ -57,13 +59,35 @@ def home():
     # for x in mycursor.fetchall():
     #     rows['objects'].append(x)
 
+    mycursor.close()
+
     print(rows)
 
     return {'title': '<b>Dashboard</b>!', 'rows': rows }
 
 @app.route('/dashboard')
 @view('dashboard.html')
-def home():
+def dashboard():
+    rows = {}
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        rows['type'] = 'This is an AJAX request'
+
+        # cursor object c
+        mycursor = config.bootstrap.dbc.cursor()
+        
+        # executing the create database statement
+        mycursor.execute("SELECT object, count(id) as count_object, detected_at FROM data_object WHERE object IS NOT NULL GROUP BY object ORDER BY detected_at DESC")
+        
+        rows['objects'] = mycursor.fetchall()
+
+        for key, row in rows['objects'].items():
+            if isinstance(row[2], (datetime, date)):
+                rows['objects'][key][2] = row[2].isoformat()
+
+        mycursor.close()
+
+        return json.dumps(rows)
+    
     return {'title': '<b>Dashboard</b>!'}
 
 @app.route('/hello')
@@ -77,7 +101,7 @@ def broker_push():
     Faker.seed(0)
     while i<10:
         # temperature = read_from_imaginary_thermometer()
-        data = {'name': fake.name(), "value": fake.pyint(1, 100), 'date': datetime.datetime.now()}
+        data = {'name': fake.name(), "value": fake.pyint(1, 100), 'date': datetime.now()}
         print("data", data)
         data = json.dumps(data)
         print("data", data)

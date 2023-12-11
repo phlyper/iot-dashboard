@@ -7,7 +7,7 @@
             <i class="fa fa-shopping-bag fa-2x opacity-25"></i>
           </div>
           <div>
-            <div class="fs-3 fw-semibold">{{ stats['commande'][0] }}</div>
+            <div class="fs-3 fw-semibold">{{ (stats['commande'][0] | default('')) if stats is defined else '' }}</div>
             <div class="fs-sm fw-semibold text-uppercase text-muted">Commandes</div>
           </div>
         </div>
@@ -20,7 +20,7 @@
             <i class="fa fa-wallet fa-2x opacity-25"></i>
           </div>
           <div>
-            <div class="fs-3 fw-semibold">{{ stats['billet'][0] }}</div>
+            <div class="fs-3 fw-semibold">{{ (stats['billet'][0] | default('')) if stats is defined else '' }}</div>
             <div class="fs-sm fw-semibold text-uppercase text-muted">Billets</div>
           </div>
         </div>
@@ -33,7 +33,7 @@
             <i class="fa fa-envelope-open fa-2x opacity-25"></i>
           </div>
           <div>
-            <div class="fs-3 fw-semibold">{{ stats['representation'][0] }}</div>
+            <div class="fs-3 fw-semibold">{{ (stats['representation'][0] | default('')) if stats is defined else '' }}</div>
             <div class="fs-sm fw-semibold text-uppercase text-muted">Representations</div>
           </div>
         </div>
@@ -46,7 +46,7 @@
             <i class="fa fa-users fa-2x opacity-25"></i>
           </div>
           <div>
-            <div class="fs-3 fw-semibold">{{ stats['user'][0] }}</div>
+            <div class="fs-3 fw-semibold">{{ (stats['user'][0] | default('')) if stats is defined else '' }}</div>
             <div class="fs-sm fw-semibold text-uppercase text-muted">Users</div>
           </div>
         </div>
