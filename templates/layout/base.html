@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-    <title>Codebase - Bootstrap 5 Admin Template &amp; UI Framework</title>
+    <title>Dashboard IOT</title> <!-- Bootstrap 5 Admin Template &amp; UI Framework -->
 
     <meta name="description" content="Codebase - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave">
     <meta name="author" content="pixelcave">
@@ -40,7 +40,8 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/sprintf-js@1.1.3/src/sprintf.min.js"></script>
+
     {% block style %}
     {% endblock style %}
   </head>
@@ -68,9 +69,11 @@
               </div>
               <div class="col-md py-2 d-md-flex align-items-md-center justify-content-md-end text-center">
               {% block main_container_actions %}
+              <!--
                 <a href="#" class="btn btn-alt-primary">
                   <i class="fa fa-user-plus opacity-50 me-1"></i> New Account
                 </a>
+              -->
               {% endblock main_container_actions %}
               </div>
             </div>
@@ -109,9 +112,14 @@
 
     <!-- Page JS Plugins -->
     <script src="/assets/js/plugins/chart.js/chart.umd.js"></script>
+    <script src="/assets/js/plugins/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+    <!-- Page JS Helpers (BS Notify Plugin) -->
+    <script>Codebase.helpersOnLoad(['jq-notify']);</script>
 
     <!-- Page JS Code -->
-    <script src="/assets/js/pages/db_corporate.min.js"></script>  
+    <script src="/assets/js/pages/db_corporate.min.js"></script>
+
     {% block javascript %}
     {% endblock javascript %}
   </body>

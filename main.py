@@ -26,10 +26,10 @@ def home():
 
     # cursor object c
     mycursor = config.bootstrap.dbc.cursor()
-    
+
     # executing the create database statement
     mycursor.execute("SELECT * FROM data_object WHERE detected_at IS NOT NULL ORDER BY detected_at DESC LIMIT 0, 100")
-    
+
     rows['latest'] = mycursor.fetchall()
     # rows['latest'] = []
     # for x in mycursor.fetchall():
@@ -37,10 +37,10 @@ def home():
 
     # cursor object c
     mycursor = config.bootstrap.dbc.cursor()
-    
+
     # executing the create database statement
     mycursor.execute("SELECT DISTINCT(`object`) FROM data_object WHERE object IS NOT NULL")
-    
+
     rows['list_objects'] = mycursor.fetchall()
     # rows['objects'] = []
     # for x in mycursor.fetchall():
@@ -50,10 +50,10 @@ def home():
 
     # cursor object c
     mycursor = config.bootstrap.dbc.cursor()
-    
+
     # executing the create database statement
     mycursor.execute("SELECT object, count(id) as count_object, detected_at FROM data_object WHERE object IS NOT NULL GROUP BY object ORDER BY detected_at DESC")
-    
+
     rows['objects'] = mycursor.fetchall()
     # rows['objects'] = []
     # for x in mycursor.fetchall():
@@ -74,27 +74,38 @@ def dashboard():
 
         # cursor object c
         mycursor = config.bootstrap.dbc.cursor()
-        
+
         # executing the create database statement
-        mycursor.execute("SELECT object, count(id) as count_object, detected_at FROM data_object WHERE object IS NOT NULL GROUP BY object ORDER BY detected_at DESC")
-        
+        mycursor.execute("SELECT object, accuracy, count(id) as count_object, detected_at, read_at FROM data_object WHERE object IS NOT NULL AND read_at IS NULL GROUP BY object ORDER BY detected_at ASC")
+
         rows['objects'] = mycursor.fetchall()
 
-        for key, row in rows['objects'].items():
-            if isinstance(row[2], (datetime, date)):
-                rows['objects'][key][2] = row[2].isoformat()
+        print(rows)
+
+        for index in range(len(rows['objects'])):
+            row = list(rows['objects'][index])
+            print('row v1', row)
+
+            for key in range(len(row)):
+                if isinstance(row[key], (datetime, date)):
+                    row[key] = row[key].isoformat()
+
+            rows['objects'][index] = tuple(row)
+            print('row v2', rows['objects'][index])
 
         mycursor.close()
 
+        # rows['objects'] = {"i": "b"}
+
         return json.dumps(rows)
-    
+
     return {'title': '<b>Dashboard</b>!'}
 
 @app.route('/hello')
 @app.route('/hello/<name>')
 def hello(name="world"):
     return template('<b>Hello {{name}}</b>!', name=name)
-    
+
 @app.route('/broker/push')
 def broker_push():
     i=0
@@ -115,22 +126,22 @@ def broker_push():
         i=i+1
     return template('broker_push {{data}}', data, i)
 
-@app.route('broker/pull')    
+@app.route('broker/pull')
 def borker_pull():
     data = {}
-    
+
     # client.subscribe('encyclopedia/#', qos=1)
     # client.loop_forever()
-    
+
     return template('broker_pull {{data}}', data)
 
 if __name__ == "__main__":
     bottle.debug(True)
-    
+
     @app.route('/assets/<filepath:path>')
     def server_static(filepath):
         print(filepath)
         return bottle.static_file(filepath, root='./assets/')
-        # yield 
-    
+        # yield
+
     run(app, host='0.0.0.0', port=86, reloader=True, debug=True)

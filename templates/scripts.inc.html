@@ -4,6 +4,30 @@ function load_data($, params) {
     console.log('params', params);
     $.get("/dashboard", function(data) {
         console.log('data', data);
+
+        let message = "", message_type = "success";
+
+
+        if("objects" in data) {
+            $.each(data.objects, function(index, row) {
+                message += sprintf("%s %s %s\n", row[3], row[0], row[1])
+                console.log('index', index, 'row', row, 'message', message);
+
+                if(row[2] > 1) {
+                    message_type = 'info';
+                }
+            });
+        }
+
+        if(Codebase && $.isFunction(Codebase.helpers) && message) {
+            Codebase.helpers('jq-notify', {
+                align: 'right',             // 'right', 'left', 'center'
+                from: 'bottom',                // 'top', 'bottom'
+                type: message_type,               // 'info', 'success', 'warning', 'danger'
+                icon: 'fa fa-info me-5',    // Icon class
+                message: message
+            });
+        }
     }, 'json');
 }
 
@@ -98,7 +122,7 @@ function load_data($, params) {
             if($.isFunction(load_data)) {
                 load_data($, {});
             }
-        }, 2400);
+        }, 5000);
     });
 })(jQuery);
 </script>
