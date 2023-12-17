@@ -12,16 +12,16 @@ class pageDashboardCorporate {
    */
   static initCorporateChartJS() {
     // Set Global Chart.js configuration
-    Chart.defaults.color = '#818d96';
-    Chart.defaults.scale.grid.color = "transparent";
-    Chart.defaults.scale.grid.zeroLineColor = "transparent";
-    Chart.defaults.scale.display = false;
-    Chart.defaults.scale.beginAtZero = true;
-    Chart.defaults.elements.line.borderWidth = 2;
-    Chart.defaults.elements.point.radius = 5;
-    Chart.defaults.elements.point.hoverRadius = 7;
-    Chart.defaults.plugins.tooltip.radius = 3;
-    Chart.defaults.plugins.legend.display = false;
+    // Chart.defaults.color = '#818d96';
+    // Chart.defaults.scale.grid.color = "transparent";
+    // Chart.defaults.scale.grid.zeroLineColor = "transparent";
+    // Chart.defaults.scale.display = false;
+    // Chart.defaults.scale.beginAtZero = true;
+    // Chart.defaults.elements.line.borderWidth = 2;
+    // Chart.defaults.elements.point.radius = 5;
+    // Chart.defaults.elements.point.hoverRadius = 7;
+    // Chart.defaults.plugins.tooltip.radius = 3;
+    // Chart.defaults.plugins.legend.display = false;
 
     // Chart Containers
     let chartCorporateLinesCon = document.getElementById('js-chartjs-corporate-lines');

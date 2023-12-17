@@ -35,9 +35,9 @@ function load_data($, params) {
     $(function() {
         if(jQuery.isFunction(Chart)) {
         // Set Global Chart.js configuration
-        Chart.defaults.color = '#818d96';
-        Chart.defaults.scale.grid.color = "rgba(0,0,0,.04)";
-        Chart.defaults.scale.grid.zeroLineColor = "rgba(0,0,0,.1)";
+        // Chart.defaults.color = '#818d96';
+        // Chart.defaults.scale.grid.color = "rgba(0,0,0,.04)";
+        // Chart.defaults.scale.grid.zeroLineColor = "rgba(0,0,0,.1)";
         Chart.defaults.scale.beginAtZero = true;
         Chart.defaults.elements.line.borderWidth = 2;
         Chart.defaults.elements.point.radius = 5;
@@ -46,8 +46,12 @@ function load_data($, params) {
         Chart.defaults.plugins.legend.labels.boxWidth = 12;
 
         // DataSet
-        let labels = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
-        let datas = [12, 19, 3, 5, 2, 3];
+        let labels = [
+            // 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'
+        ];
+        let datas = [
+           // 12, 19, 3, 5, 2, 3
+        ];
 
 {% if rows['objects'] is defined %}
     {% for row in rows['objects'] %}
@@ -64,7 +68,7 @@ function load_data($, params) {
             data: {
                 labels: labels,
                 datasets: [{
-                    label: '# of Votes',
+                    label: '# objects detected',
                     data: datas,
                     borderWidth: 1
                 }]
@@ -85,7 +89,7 @@ function load_data($, params) {
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'My First Dataset',
+                    label: '# objects detected',
                     data: datas,
                     backgroundColor: [
                     'rgb(255, 99, 132)',
@@ -97,6 +101,7 @@ function load_data($, params) {
             },
         });
 
+/*
         // myChart-03 https://www.chartjs.org/docs/latest/samples/bar/border-radius.html
         const ctx_03 = document.getElementById('myChart-03');
         new Chart(ctx_03, {
@@ -104,7 +109,7 @@ function load_data($, params) {
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'My First Dataset',
+                    label: '# objects detected',
                     data: datas,
                     backgroundColor: [
                     'rgb(255, 99, 132)',
@@ -113,6 +118,53 @@ function load_data($, params) {
                     ],
                     hoverOffset: 4
                 }]
+            },
+        });
+        */
+
+        labels = [];
+        datas = [];
+
+{% if rows['list_byday'] is defined %}
+    {% for row in rows['list_byday'] %}
+        labels.push("{{ row[0] }}");
+        datas.push({{ row[1] }});
+    {% endfor %}
+{% endif %}
+
+        lables = labels.reverse();
+        datas = datas.reverse();
+
+        // myChart-04 https://www.chartjs.org/docs/latest/samples/bar/border-radius.html
+        const ctx_04 = document.getElementById('myChart-04');
+        new Chart(ctx_04, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '# objects detected',
+                    data: datas,
+                    backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)'
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                plugins: {
+                filler: {
+                    propagate: false,
+                },
+                title: {
+                    display: true,
+                    // text: (ctx) => 'Fill: ' + ctx.chart.data.datasets[0].fill
+                }
+                },
+                interaction: {
+                intersect: false,
+                }
             },
         });
         }

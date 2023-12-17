@@ -28,12 +28,14 @@ def home():
     mycursor = config.bootstrap.dbc.cursor()
 
     # executing the create database statement
-    mycursor.execute("SELECT * FROM data_object WHERE detected_at IS NOT NULL ORDER BY detected_at DESC LIMIT 0, 100")
+    mycursor.execute("SELECT * FROM data_object WHERE object IS NOT NULL AND detected_at IS NOT NULL ORDER BY detected_at DESC LIMIT 0, 100")
 
     rows['latest'] = mycursor.fetchall()
     # rows['latest'] = []
     # for x in mycursor.fetchall():
     #     rows['latest'].append(x)
+
+    mycursor.close()
 
     # cursor object c
     mycursor = config.bootstrap.dbc.cursor()
@@ -61,6 +63,19 @@ def home():
 
     mycursor.close()
 
+    # cursor object c
+    mycursor = config.bootstrap.dbc.cursor()
+
+    # executing the create database statement
+    mycursor.execute("SELECT date(detected_at) as `detected_date`, COUNT(`id`) as `count_object` FROM data_object WHERE object IS NOT NULL GROUP BY date(detected_at) ORDER BY detected_at DESC")
+
+    rows['list_byday'] = mycursor.fetchall()
+    # rows['objects'] = []
+    # for x in mycursor.fetchall():
+    #     rows['objects'].append(x)
+
+    mycursor.close()
+
     print(rows)
 
     return {'title': '<b>Dashboard</b>!', 'rows': rows }
@@ -76,7 +91,7 @@ def dashboard():
         mycursor = config.bootstrap.dbc.cursor()
 
         # executing the create database statement
-        mycursor.execute("SELECT object, accuracy, count(id) as count_object, detected_at, read_at FROM data_object WHERE object IS NOT NULL AND read_at IS NULL GROUP BY object ORDER BY detected_at ASC")
+        mycursor.execute("SELECT object, accuracy, count(id) as count_object, detected_at, read_at, id FROM data_object WHERE object IS NOT NULL AND read_at IS NULL GROUP BY object ORDER BY detected_at ASC;")
 
         rows['objects'] = mycursor.fetchall()
 
@@ -92,6 +107,16 @@ def dashboard():
 
             rows['objects'][index] = tuple(row)
             print('row v2', rows['objects'][index])
+
+        mycursor.close()
+
+        x = datetime.now()
+
+        # cursor object c
+        mycursor = config.bootstrap.dbc.cursor()
+
+        # executing the create database statement
+        mycursor.execute("UPDATE `data_object` SET read_at= %s WHERE read_at IS NULL LIMIT 1;", (x.strftime("%Y-%m-%d %H:%M:%S"),))
 
         mycursor.close()
 
