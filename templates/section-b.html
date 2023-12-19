@@ -17,6 +17,7 @@
                         <th>Object</th>
                         <th>Accuracy</th>
                         <th>Detected at</th>
+                        <th class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,7 +27,8 @@
                         <td>{{ row[0] }}</td>
                         <td>{{ row[3] }}</td>
                         <td>{{ row[4] }}</td>
-                        <td>{{ row[7] }}</td>
+                        <td>{{ row[6] }}</td><!-- 7 -->
+                        <td class="text-center"><a href="#" data-bs-id="{{ row[0] }}" data-bs-image="{{ row[1] | e }}" class="btn btn-alt-primary btn-modal-object" title="Preview" data-bs-toggle="modal" data-bs-target="#modal-large"><i class="far fa-eye"></i></a></td>
                     </tr>
                     {% endfor %}
                     {% else %}
@@ -64,3 +66,33 @@
         <canvas id="myChart-03"></canvas>
     </div>
 </div>
+
+<div class="modal" id="modal-large" tabindex="-1" role="dialog" aria-labelledby="modal-large" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="block block-rounded shadow-none mb-0">
+          <div class="block-header block-header-default">
+            <h3 class="block-title">Preview Image <strong class="modal-object-id">#</strong></h3>
+            <div class="block-options">
+              <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
+                <i class="fa fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="block-content fs-sm">
+            <a href="" class="modal-image-href d-none" target="_blank"></a><br/>
+            <pre><code class="modal-code"></code></pre>
+            <img class="img-fluid options-item modal-image" src="" />
+          </div>
+          <div class="block-content block-content-full block-content-sm text-end border-top">
+            <button type="button" class="btn btn-alt-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button type="button" class="btn btn-alt-primary" data-bs-dismiss="modal">
+              Done
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

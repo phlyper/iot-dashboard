@@ -1,5 +1,17 @@
 
 <script>
+// from https://github.com/chartjs/Chart.js/blob/master/docs/scripts/utils.js
+const CHART_COLORS = {
+  red: 'rgb(255, 99, 132)',
+  orange: 'rgb(255, 159, 64)',
+  yellow: 'rgb(255, 205, 86)',
+  green: 'rgb(75, 192, 192)',
+  blue: 'rgb(54, 162, 235)',
+  purple: 'rgb(153, 102, 255)',
+  grey: 'rgb(201, 203, 207)'
+}
+
+
 function load_data($, params) {
     console.log('params', params);
     $.get("/dashboard", function(data) {
@@ -22,7 +34,7 @@ function load_data($, params) {
         if(Codebase && $.isFunction(Codebase.helpers) && message) {
             Codebase.helpers('jq-notify', {
                 align: 'right',             // 'right', 'left', 'center'
-                from: 'bottom',                // 'top', 'bottom'
+                from: 'top',                // 'top', 'bottom'
                 type: message_type,               // 'info', 'success', 'warning', 'danger'
                 icon: 'fa fa-info me-5',    // Icon class
                 message: message
@@ -70,7 +82,8 @@ function load_data($, params) {
                 datasets: [{
                     label: '# objects detected',
                     data: datas,
-                    borderWidth: 1
+                    borderWidth: 1,
+                    backgroundColor: Object.values(CHART_COLORS),
                 }]
             },
             options: {
@@ -91,11 +104,11 @@ function load_data($, params) {
                 datasets: [{
                     label: '# objects detected',
                     data: datas,
-                    backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 205, 86)'
-                    ],
+                    // backgroundColor: [
+                    // 'rgb(255, 99, 132)',
+                    // 'rgb(54, 162, 235)',
+                    // 'rgb(255, 205, 86)'
+                    // ],
                     hoverOffset: 4
                 }]
             },
@@ -144,11 +157,12 @@ function load_data($, params) {
                 datasets: [{
                     label: '# objects detected',
                     data: datas,
-                    backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 205, 86)'
-                    ],
+                    // backgroundColor: [
+                    // 'rgb(255, 99, 132)',
+                    // 'rgb(54, 162, 235)',
+                    // 'rgb(255, 205, 86)'
+                    // ],
+                    backgroundColor: Object.values(CHART_COLORS),
                     hoverOffset: 4
                 }]
             },
@@ -169,6 +183,52 @@ function load_data($, params) {
         });
         }
 
+const objectModal = document.getElementById('modal-large');
+
+if (objectModal) {
+  objectModal.addEventListener('show.bs.modal', event => {
+    // Button that triggered the modal
+    const button = event.relatedTarget
+    // Extract info from data-bs-* attributes
+    const object_id = button.getAttribute('data-bs-id')
+    let object_image = button.getAttribute('data-bs-image')
+    // If necessary, you could initiate an Ajax request here
+    // and then do the updating in a callback.
+
+    let object_code = object_image.replaceAll(",", ",\n");
+    object_image = JSON.parse(object_image)
+
+    object_image.image_path = object_image.image_path.replaceAll("\\", "/");
+
+    console.log('object_image', object_image, 'object_id', object_id);
+
+    // Update the modal's content.
+    const modalTitle = objectModal.querySelector('.modal-object-id')
+    const modalBodyImage = objectModal.querySelector('.modal-image')
+    const modalBodyImageLink = objectModal.querySelector('.modal-image-href')
+    const modalCode = objectModal.querySelector('.modal-code')
+
+    if(modalTitle) {
+        modalTitle.textContent = `# ${object_id}`
+    }
+    if("image_path" in object_image && object_image.image_path) {
+        if(modalBodyImage) {
+            modalBodyImage.src = object_image.image_path;
+            modalBodyImage.setAttribute('src', `file:///${object_image.image_path}`);
+        }
+        if(modalBodyImageLink) {
+            modalBodyImageLink.textContent=object_image.image_path;
+            modalBodyImageLink.href=`file:///${object_image.image_path}`;
+            modalBodyImageLink.setAttribute('href',`file:///${object_image.image_path}`);
+        }
+    }
+    modalCode.textContent = object_code;
+  })
+}
+
+        $('a.btn-modal-object').each(function(index, element) {
+            // $(element).add
+        });
 
         setInterval(() => {
             if($.isFunction(load_data)) {
